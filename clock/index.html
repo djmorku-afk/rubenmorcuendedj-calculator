@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Clock - Multiple Time Zones</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="wrapper">
+        <div class="clock-container">
+            <h1 id="main-title">🕐 Digital Clock</h1>
+            <p class="subtitle" id="main-subtitle">Current time in different time zones</p>
+
+            <div class="controls-group">
+                <label id="label-format">Time Format:</label>
+                <select id="time-format" onchange="updateClocks()">
+                    <option value="24">24-Hour (HH:MM:SS)</option>
+                    <option value="12">12-Hour (AM/PM)</option>
+                </select>
+
+                <label id="label-theme">Theme:</label>
+                <select id="theme-select" onchange="changeTheme(this.value)">
+                    <option value="dark">Dark</option>
+                    <option value="light">Light</option>
+                    <option value="neon">Neon</option>
+                </select>
+            </div>
+
+            <div class="timezones-container" id="timezonesContainer">
+                <!-- Clocks will be generated here by JavaScript -->
+            </div>
+
+            <div class="add-timezone-section">
+                <h3>Add Custom Time Zone</h3>
+                <div class="add-tz-form">
+                    <input type="text" id="tz-name" placeholder="e.g., My City" maxlength="30">
+                    <select id="tz-offset">
+                        <option value="-12">UTC-12:00</option>
+                        <option value="-11">UTC-11:00</option>
+                        <option value="-10">UTC-10:00</option>
+                        <option value="-9">UTC-09:00</option>
+                        <option value="-8">UTC-08:00</option>
+                        <option value="-7">UTC-07:00</option>
+                        <option value="-6">UTC-06:00</option>
+                        <option value="-5">UTC-05:00</option>
+                        <option value="-4">UTC-04:00</option>
+                        <option value="-3">UTC-03:00</option>
+                        <option value="-2">UTC-02:00</option>
+                        <option value="-1">UTC-01:00</option>
+                        <option value="0" selected>UTC±00:00</option>
+                        <option value="1">UTC+01:00</option>
+                        <option value="2">UTC+02:00</option>
+                        <option value="3">UTC+03:00</option>
+                        <option value="4">UTC+04:00</option>
+                        <option value="5">UTC+05:00</option>
+                        <option value="5.5">UTC+05:30 (India)</option>
+                        <option value="6">UTC+06:00</option>
+                        <option value="7">UTC+07:00</option>
+                        <option value="8">UTC+08:00</option>
+                        <option value="9">UTC+09:00</option>
+                        <option value="9.5">UTC+09:30 (Australia)</option>
+                        <option value="10">UTC+10:00</option>
+                        <option value="11">UTC+11:00</option>
+                        <option value="12">UTC+12:00</option>
+                    </select>
+                    <button class="btn btn-add" onclick="addCustomTimezone()">➕ Add</button>
+                </div>
+            </div>
+
+            <div class="button-group">
+                <button class="btn btn-reset" onclick="resetToDefault()">🔄 Reset to Default</button>
+                <button class="btn btn-admin" onclick="toggleAdminPanel()">⚙️ Settings</button>
+            </div>
+        </div>
+
+        <div class="admin-panel" id="adminPanel">
+            <h2>⚙️ Settings Panel</h2>
+            <p style="font-size: 0.85rem; color: #ccc; margin-bottom: 15px;">Customize your clock display</p>
+            
+            <div class="admin-group">
+                <h3>Display Settings</h3>
+                <div class="admin-field">
+                    <label>
+                        <input type="checkbox" id="show-seconds" checked onchange="updateClocks()">
+                        Show Seconds
+                    </label>
+                </div>
+                <div class="admin-field">
+                    <label>
+                        <input type="checkbox" id="show-date" checked onchange="updateClocks()">
+                        Show Date
+                    </label>
+                </div>
+                <div class="admin-field">
+                    <label>
+                        <input type="checkbox" id="show-offset" checked onchange="updateClocks()">
+                        Show UTC Offset
+                    </label>
+                </div>
+            </div>
+
+            <div class="admin-group">
+                <h3>Color Customization</h3>
+                <div class="admin-field">
+                    <label>Text Color:</label>
+                    <input type="color" id="text-color" value="#66fcf1" onchange="applyCustomColors()">
+                </div>
+                <div class="admin-field">
+                    <label>Background Color:</label>
+                    <input type="color" id="bg-color" value="#0b0c10" onchange="applyCustomColors()">
+                </div>
+            </div>
+
+            <div class="admin-buttons">
+                <button class="save-btn" onclick="saveSettings()">💾 Save Settings</button>
+                <button class="save-btn" style="background-color: #f44336;" onclick="resetSettings()">🔄 Reset All</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/clock.js"></script>
+</body>
+</html>
