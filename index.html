@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DJ Earnings Calculator</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="wrapper">
+        <div class="calculator-container">
+            <h1 id="main-title">DJ Earning Estimator</h1>
+            <p class="subtitle" id="main-subtitle">Calcula tus ingresos potenciales por evento</p>
+
+            <div class="input-group">
+                <label id="label-input1" for="input-bolos">Número de Bolos / Eventos al mes:</label>
+                <input type="number" id="input-bolos" value="4" min="0" oninput="calcularGlosses()">
+            </div>
+
+            <div class="input-group">
+                <label id="label-input2" for="input-cache">Caché promedio por evento (€):</label>
+                <input type="number" id="input-cache" value="250" min="0" oninput="calcularGlosses()">
+            </div>
+
+            <div class="input-group">
+                <label id="label-input3" for="select-experiencia">Nivel de Experiencia / Equipo:</label>
+                <select id="select-experiencia" onchange="calcularGlosses()">
+                    <option value="1" selected>Básico (Solo mezcla)</option>
+                    <option value="1.5">Intermedio (Lleva sonido propio)</option>
+                    <option value="2.2">Premium (Sonido, iluminación y animación)</option>
+                </select>
+            </div>
+
+            <div class="results-container">
+                <div class="result-item">
+                    <span class="result-label" id="label-res1">Ingresos Brutos Estimados:</span>
+                    <span class="result-value" id="res-bruto">0.00 €</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label" id="label-res2">Multiplicador por Infraestructura:</span>
+                    <span class="result-value" id="res-bonus">1.0x</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label" id="label-res3">Gastos Estimados (Transporte/Amortización):</span>
+                    <span class="result-value" id="res-gastos" style="color: #ff6b6b;">0.00 €</span>
+                </div>
+                <div class="result-item result-total">
+                    <span class="result-label" id="label-res-total">BENEFICIO NETO MENSUAL:</span>
+                    <span class="result-value" id="res-neto">0.00 €</span>
+                </div>
+            </div>
+
+            <div class="button-group">
+                <button class="btn btn-export" onclick="exportarResultados()">📊 Exportar Resultados</button>
+                <button class="btn btn-admin" onclick="toggleAdminPanel()">⚙️ Panel Admin</button>
+            </div>
+        </div>
+
+        <div class="admin-panel" id="adminPanel">
+            <h2>Panel de Configuración</h2>
+            <p style="font-size: 0.85rem; color: #ccc; margin-bottom: 15px;">Modifica títulos, etiquetas y variables matemáticas.</p>
+            
+            <div class="admin-group">
+                <h3>1. Títulos de la Web</h3>
+                <div class="admin-field">
+                    <label>Título Principal:</label>
+                    <input type="text" id="admin-title" value="DJ Earning Estimator">
+                </div>
+                <div class="admin-field">
+                    <label>Subtítulo:</label>
+                    <input type="text" id="admin-subtitle" value="Calcula tus ingresos potenciales por evento">
+                </div>
+            </div>
+
+            <div class="admin-group">
+                <h3>2. Modificar Conceptos (Preguntas)</h3>
+                <div class="admin-field">
+                    <label>Pregunta 1 (Eventos):</label>
+                    <input type="text" id="admin-label1" value="Número de Bolos / Eventos al mes:">
+                </div>
+                <div class="admin-field">
+                    <label>Pregunta 2 (Caché):</label>
+                    <input type="text" id="admin-label2" value="Caché promedio por evento (€):">
+                </div>
+                <div class="admin-field">
+                    <label>Pregunta 3 (Desplegable):</label>
+                    <input type="text" id="admin-label3" value="Nivel de Experiencia / Equipo:">
+                </div>
+            </div>
+
+            <div class="admin-group">
+                <h3>3. Configuración Matemática / Precios</h3>
+                <div class="admin-field">
+                    <label>Gastos Fijos por Evento (€):</label>
+                    <input type="number" id="admin-gastos-fijos" value="30">
+                </div>
+                <div class="admin-field">
+                    <label>Porcentaje de Impuestos/Comisión (0.20 = 20%):</label>
+                    <input type="number" id="admin-impuesto" value="0.15" step="0.01">
+                </div>
+            </div>
+
+            <div class="admin-group">
+                <h3>4. Modificar Textos de Resultados</h3>
+                <div class="admin-field">
+                    <label>Resultado 1:</label>
+                    <input type="text" id="admin-res1" value="Ingresos Brutos Estimados:">
+                </div>
+                <div class="admin-field">
+                    <label>Resultado 2:</label>
+                    <input type="text" id="admin-res2" value="Multiplicador por Infraestructura:">
+                </div>
+                <div class="admin-field">
+                    <label>Resultado 3:</label>
+                    <input type="text" id="admin-res3" value="Gastos Estimados (Transporte/Amortización):">
+                </div>
+                <div class="admin-field">
+                    <label>Resultado Final:</label>
+                    <input type="text" id="admin-res-total" value="BENEFICIO NETO MENSUAL:">
+                </div>
+            </div>
+
+            <div class="admin-buttons">
+                <button class="save-btn" onclick="aplicarConfiguracion()">✓ Aplicar Cambios</button>
+                <button class="save-btn" style="background-color: #4CAF50;" onclick="guardarConfiguracion()">💾 Guardar Config</button>
+                <button class="save-btn" style="background-color: #f44336;" onclick="resetearConfiguracion()">🔄 Restaurar</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/app.js"></script>
+</body>
+</html>
